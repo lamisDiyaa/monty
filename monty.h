@@ -53,4 +53,5 @@ void f_pall(stack_t **head, unsigned int counter);
 void free_stack(stack_t *head);
 void f_pint(stack_t **head, unsigned int counter);
 void f_pop(stack_t **head, unsigned int counter);
+void f_swap(stack_t **head, unsigned int counter);
 #endif /* MONTY_H */
