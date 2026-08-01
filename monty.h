@@ -51,5 +51,5 @@ extern bus_t bus;
 void f_push(stack_t **head, unsigned int counter);
 void f_pall(stack_t **head, unsigned int counter);
 void free_stack(stack_t *head);
-
+void f_pint(stack_t **head, unsigned int counter);
 #endif /* MONTY_H */
