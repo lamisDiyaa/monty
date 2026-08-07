@@ -1,16 +1,15 @@
-#define _GNU_SOURCE
+#define _POSIX_C_SOURCE 200809L
 #include "monty.h"
-#include <stdio.h>
 
-bus_t bus = {NULL, NULL, NULL};
+bus_t bus = {NULL, NULL, NULL, 0};
 
 /**
  * execute - executes the opcode
+ * @content: line content
  * @stack: head linked list - stack
  * @counter: line_counter
  * @file: pointer to monty file
- * @content: line content
- * Return: 0 on success, 1 if opcode not found
+ * Return: 0 on success, 1 on failure
  */
 int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
 {
@@ -30,6 +29,8 @@ int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
 		{"pstr", f_pstr},
 		{"rotl", f_rotl},
 		{"rotr", f_rotr},
+		{"stack", f_stack},
+		{"queue", f_queue},
 		{NULL, NULL}
 	};
 	unsigned int i = 0;
@@ -60,20 +61,19 @@ int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
 }
 
 /**
- * main - monty code interpreter
- * @argc: number of arguments
- * @argv: monty file location
- * Return: 0 on success
- */
+* main - monty code interpreter
+* @argc: number of arguments
+* @argv: monty file location
+* Return: 0 on success
+*/
 int main(int argc, char *argv[])
 {
-	char *content = NULL;
+	char *content;
 	FILE *file;
 	size_t size = 0;
 	ssize_t read_line = 1;
 	stack_t *stack = NULL;
 	unsigned int counter = 0;
-	int i;
 
 	if (argc != 2)
 	{
@@ -95,16 +95,6 @@ int main(int argc, char *argv[])
 		counter++;
 		if (read_line > 0)
 		{
-			i = 0;
-			while (content[i] == ' ' || content[i] == '\t' || content[i] == '\n' || content[i] == '\r')
-				i++;
-
-			if (content[i] == '#')
-			{
-				free(content);
-				continue;
-			}
-
 			execute(content, &stack, counter, file);
 		}
 		free(content);

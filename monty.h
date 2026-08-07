@@ -1,10 +1,10 @@
 #ifndef MONTY_H
+#ifndef MONTY_H
 #define MONTY_H
-
+#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/types.h>
 
 /**
@@ -43,6 +43,7 @@ typedef struct bus_s
 	char *arg;
 	FILE *file;
 	char *content;
+	int lifi;
 }  bus_t;
 
 extern bus_t bus;
@@ -64,4 +65,8 @@ void f_pchar(stack_t **head, unsigned int counter);
 void f_pstr(stack_t **head, unsigned int counter);
 void f_rotl(stack_t **head, unsigned int counter);
 void f_rotr(stack_t **head, unsigned int counter);
+void f_stack(stack_t **head, unsigned int counter);
+void f_queue(stack_t **head, unsigned int counter);
+void addqueue(stack_t **head, int n);
+void addnode(stack_t **head, int n);
 #endif /* MONTY_H */
