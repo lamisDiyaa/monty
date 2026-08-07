@@ -16,7 +16,6 @@ int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
 {
 	instruction_t opst[] = {
 		{"push", f_push},
-
 		{"pall", f_pall},
 		{"pint", f_pint},
 		{"pop", f_pop},
@@ -70,6 +69,7 @@ int main(int argc, char *argv[])
 	ssize_t read_line = 1;
 	stack_t *stack = NULL;
 	unsigned int counter = 0;
+	int i;
 
 	if (argc != 2)
 	{
@@ -91,6 +91,16 @@ int main(int argc, char *argv[])
 		counter++;
 		if (read_line > 0)
 		{
+			i = 0;
+			while (content[i] == ' ' || content[i] == '\t' || content[i] == '\n' || content[i] == '\r')
+				i++;
+
+			if (content[i] == '#')
+			{
+				free(content);
+				continue;
+			}
+
 			execute(content, &stack, counter, file);
 		}
 		free(content);
