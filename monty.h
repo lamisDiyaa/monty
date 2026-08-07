@@ -1,11 +1,13 @@
 #ifndef MONTY_H
-#ifndef MONTY_H
 #define MONTY_H
-#define _POSIX_C_SOURCE 200809L
+
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -37,18 +39,24 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/* المتغير العالمي لنقل البيانات الممررة مع الـ push والتحكم في الملف */
+/**
+ * struct bus_s - variables -args, file, line content
+ * @arg: value
+ * @file: pointer to monty file
+ * @content: line content
+ * @lifi: flag change push format stack <-> queue
+ * Description: carries values through the program
+ */
 typedef struct bus_s
 {
 	char *arg;
 	FILE *file;
 	char *content;
 	int lifi;
-}  bus_t;
+} bus_t;
 
 extern bus_t bus;
 
-/* الدوال المطلوبة للـ Task الحالي */
 void f_push(stack_t **head, unsigned int counter);
 void f_pall(stack_t **head, unsigned int counter);
 void free_stack(stack_t *head);
@@ -69,4 +77,6 @@ void f_stack(stack_t **head, unsigned int counter);
 void f_queue(stack_t **head, unsigned int counter);
 void addqueue(stack_t **head, int n);
 void addnode(stack_t **head, int n);
+int execute(char *content, stack_t **stack, unsigned int counter, FILE *file);
+
 #endif /* MONTY_H */
